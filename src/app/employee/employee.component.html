@@ -1,0 +1,44 @@
+ 
+<p [attr.colspan]="colSpan">{{CompanyName}} - {{Business}} - {{CompanyAddress}}</p>
+
+<br/>
+<br/>
+
+<employee-count *ngIf="employees"
+[all]="getTotalEmployeesCount()"
+[male]="getTotalMaleEmployeesCount()"
+[female]="getTotalFemaleEmployeesCount()"
+(countRadioButtonSelectionChanged) = "onEmployeeCountRadioButtonChange($event)"
+></employee-count>
+<br/>
+
+<table>
+<thead>
+<tr>
+<th>Sr.</th>
+<th>Code</th>
+<th>Name</th>
+<th>Gender</th>
+<th>Annaul Salary</th>
+<th>Date Of Birth</th>
+</tr>
+</thead>
+<tbody>
+<ng-container *ngFor="let employee of employees;trackBy:trackByEmpCode;let i=index;">
+<tr *ngIf="selectedEmployeeCountRadioButton=='All' || selectedEmployeeCountRadioButton==employee.gender">
+<td>{{i + 1}}</td>
+ <td>{{employee.code | uppercase}}</td>
+ <td>{{employee.name | employeeTitle:employee.gender}}</td>
+ <td>{{employee.gender}}</td>
+ <td>{{employee.annualSalary | currency:'INR':true:2-2}}</td>
+<td>{{employee.dateOfBirth | date:'dd/MMM/yyyy'}}</td>
+</tr>
+
+<tr *ngIf="!employees || employees.length==0">
+<td  colspan="5">No Employess to display!</td>
+</tr>
+</ng-container>
+ </tbody>
+</table>
+<br/>
+<button (click)="getEmployees()">Get Employee</button>
