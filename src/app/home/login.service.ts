@@ -34,12 +34,6 @@ export class LoginService {
 	  };
 	debugger;
 	return this._http.post<any>(this.apiURL ,userData, httpOptions)
-	.subscribe(response => {
-		console.log(response);
-		return response;
-	}, err => {
-		throw err;
-	});
 
 	}
 	
